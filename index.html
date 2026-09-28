@@ -7,80 +7,97 @@
 <style>
 :root{
   --bg:#f4f5f7; --panel:#ffffff; --ink:#15191f; --muted:#5d6673; --line:#e2e5ea;
-  --accent:#0b5cad; --accent-soft:#e6f0fa; --ok:#1c7c4a; --ok-soft:#e5f4ec;
+  --accent:#0b5cad; --accent-soft:#e8f1fb; --accent-zone:#f2f7fd; --ok:#1c7c4a; --ok-soft:#e5f4ec;
   --warn:#9a5b00; --warn-soft:#fdf1dc; --bad:#b3261e; --bad-soft:#fbe7e5;
-  --gold:#b8860b; --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.04);
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.04);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0f1216; --panel:#171b21; --ink:#e8ebef; --muted:#9aa3ae; --line:#2a3039;
-  --accent:#5aa6ef; --accent-soft:#16283b; --ok:#5cc58c; --ok-soft:#15291f;
-  --warn:#e3a94a; --warn-soft:#2c2413; --bad:#f08a80; --bad-soft:#321a18; --gold:#e0b64a;
+  --accent:#5aa6ef; --accent-soft:#16283b; --accent-zone:#131f2c; --ok:#5cc58c; --ok-soft:#15291f;
+  --warn:#e3a94a; --warn-soft:#2c2413; --bad:#f08a80; --bad-soft:#321a18;
   --shadow:none;
 }}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
-header{padding:20px 24px 12px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between;max-width:1500px;margin:0 auto}
+header{padding:20px 24px 12px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between;max-width:1600px;margin:0 auto}
 h1{margin:0;font-size:22px;letter-spacing:-.01em}
 .sub{color:var(--muted);font-size:13.5px;margin-top:2px}
 .status{display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:13.5px;color:var(--muted)}
 .dot{width:9px;height:9px;border-radius:50%;background:var(--muted);display:inline-block;margin-right:6px;vertical-align:1px}
-.dot.live{background:var(--ok);box-shadow:0 0 0 0 var(--ok);animation:pulse 2s infinite}
+.dot.live{background:var(--ok);animation:pulse 2s infinite}
 .dot.err{background:var(--bad)}
 @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 60%,transparent)}70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
 button.tog{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:8px;padding:5px 10px;cursor:pointer}
 button.tog:hover{border-color:var(--accent)}
-.progress{max-width:1500px;margin:0 auto;padding:0 24px 8px}
+.progress{max-width:1600px;margin:0 auto;padding:0 24px 8px}
 .bar{height:6px;border-radius:4px;background:var(--line);overflow:hidden}
 .bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .6s}
-main{max-width:1500px;margin:0 auto;padding:8px 24px 40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,560px),1fr));gap:18px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
-.card.wide{grid-column:1/-1}
-.card-h{padding:14px 18px 10px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+main{max-width:1600px;margin:0 auto;padding:8px 24px 40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,640px),1fr));gap:18px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.card-h{padding:14px 18px 10px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
 .code{font-weight:700;font-size:17px}
 .cargo{color:var(--muted);font-size:13px}
 .meta{font-size:12.5px;color:var(--muted);text-align:right;white-space:nowrap}
 .pill{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);margin-left:6px;vertical-align:2px}
-.note{margin:10px 18px 0;padding:9px 12px;border-radius:8px;background:var(--accent-soft);font-size:12.8px;color:var(--ink)}
-.rows{padding:8px 10px 6px}
-.row{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:10px 8px;border-radius:10px;transition:background .8s}
-.row + .row{border-top:1px solid var(--line)}
-.row.flash{background:var(--warn-soft)}
-.pos{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--accent-soft);color:var(--accent);font-size:15px}
-.row.p1 .pos{background:var(--accent);color:#fff}
-.name{font-weight:600;line-height:1.25}
-.detail{font-size:12.5px;color:var(--muted);margin-top:2px}
-.detail b{color:var(--ink);font-weight:600}
-.score{text-align:right}
-.nf{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.nf-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
-.tags{margin-top:4px;display:flex;flex-wrap:wrap;gap:4px}
-.tag{font-size:11.2px;font-weight:600;padding:1px 7px;border-radius:6px;background:var(--line);color:var(--muted)}
+.note{margin:0 18px 10px;padding:8px 12px;border-radius:8px;background:var(--accent-soft);font-size:12.6px}
+.note.bad{background:var(--bad-soft);color:var(--bad)}
+.note.warn{background:var(--warn-soft);color:var(--warn)}
+
+/* ---- Ranking ---- */
+.cols,.r{display:grid;grid-template-columns:46px minmax(0,1fr) 46px 46px 64px 70px 44px;gap:8px;align-items:center}
+.cols{padding:6px 14px 6px 10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.cols .n,.r .n{text-align:right;font-variant-numeric:tabular-nums}
+.lista{position:relative;padding:4px 0 8px}
+.r{padding:8px 14px 8px 10px;border-left:4px solid transparent;position:relative;background:var(--panel);transition:background-color 1.2s ease}
+.r + .r{box-shadow:inset 0 1px 0 var(--line)}
+.r.terna{background:var(--accent-zone);border-left-color:var(--accent)}
+.r.extra{background:var(--accent-zone);border-left-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+.r.out{color:var(--muted)}
+.r.chg{background:var(--warn-soft)!important}
+.pos{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:14px;background:var(--line);color:var(--muted)}
+.r.terna .pos,.r.extra .pos{background:var(--accent-soft);color:var(--accent)}
+.r.terna.p1 .pos{background:var(--accent);color:#fff}
+.r.out .pos{background:transparent;border:1px dashed var(--line)}
+.nm{font-weight:600;line-height:1.25;overflow-wrap:anywhere}
+.r.out .nm{font-weight:500}
+.sb{font-size:12px;color:var(--muted);margin-top:1px}
+.tags{display:inline-flex;flex-wrap:wrap;gap:4px;margin-top:3px}
+.tag{font-size:11px;font-weight:600;padding:1px 7px;border-radius:6px;background:var(--line);color:var(--muted)}
 .tag.warn{background:var(--warn-soft);color:var(--warn)}
 .tag.bad{background:var(--bad-soft);color:var(--bad)}
 .tag.ok{background:var(--ok-soft);color:var(--ok)}
 .tag.info{background:var(--accent-soft);color:var(--accent)}
-.split{margin:6px 18px 0;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
-.empty{padding:22px 18px;color:var(--muted);font-size:14px}
-details{border-top:1px solid var(--line);margin-top:auto}
-summary{cursor:pointer;padding:10px 18px;font-size:13px;color:var(--muted);user-select:none}
-summary:hover{color:var(--ink)}
-table{width:100%;border-collapse:collapse;font-size:12.8px}
-th,td{padding:6px 10px;text-align:left;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
-th{font-weight:600;color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.03em}
-td.n,th.n{text-align:right}
-tr.out td{color:var(--muted)}
-.tbl{padding:0 8px 12px;overflow-x:auto}
-footer{max-width:1500px;margin:0 auto;padding:0 24px 30px;color:var(--muted);font-size:12.5px}
-.banner{max-width:1500px;margin:0 auto 6px;padding:0 24px}
+.nf{font-size:20px;font-weight:700}
+.r.out .nf{font-size:16px;font-weight:600}
+.mv{font-size:12px;font-weight:700;text-align:center;animation:fade 6s forwards}
+.mv.up{color:var(--ok)} .mv.down{color:var(--bad)}
+@keyframes fade{0%,70%{opacity:1}100%{opacity:0}}
+.sep{padding:6px 14px 4px;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+.sep::after{content:"";flex:1;border-top:1px dashed var(--line)}
+.sep.corte{color:var(--accent)}
+.sep.corte::after{border-top:2px dashed var(--accent)}
+.vacio{padding:14px 18px;color:var(--muted);font-size:13.5px}
+.r.ent{animation:enter .5s ease}
+@keyframes enter{from{opacity:0}to{opacity:1}}
+
+footer{max-width:1600px;margin:0 auto;padding:0 24px 30px;color:var(--muted);font-size:12.5px}
+.banner{max-width:1600px;margin:0 auto 6px;padding:0 24px}
 .banner div{background:var(--bad-soft);color:var(--bad);border-radius:10px;padding:10px 14px;font-size:13.5px}
-.clave{max-width:1500px;margin:30px auto;padding:0 24px}
+.clave{max-width:1600px;margin:30px auto;padding:0 24px}
 .clave form{max-width:380px;margin:0 auto;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:22px;display:grid;gap:10px}
 .clave-t{font-weight:700;font-size:17px}
 .clave-s{color:var(--muted);font-size:13.5px}
 .clave input{font:inherit;padding:9px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
 .clave button{font:inherit;font-weight:600;padding:9px 12px;border-radius:8px;border:0;background:var(--accent);color:#fff;cursor:pointer}
 .clave-e{color:var(--bad);font-size:13px;min-height:1em}
-@media (max-width:560px){header,main,.progress,footer,.banner{padding-left:16px;padding-right:16px}.nf{font-size:20px}.row{grid-template-columns:38px 1fr auto}}
+@media (max-width:620px){
+  header,main,.progress,footer,.banner{padding-left:16px;padding-right:16px}
+  .cols,.r{grid-template-columns:36px minmax(0,1fr) 58px 30px}
+  .cols .hx,.r .hx{display:none}
+  .pos{width:28px;height:28px;font-size:13px}
+  .nf{font-size:18px}
+}
+@media (prefers-reduced-motion:reduce){.r,.mv,.r.ent{animation:none;transition:none}}
 </style>
 </head>
 <body>
@@ -108,18 +125,18 @@ footer{max-width:1500px;margin:0 auto;padding:0 24px 30px;color:var(--muted);fon
 </div>
 <main id="app"></main>
 <footer>
-  Reglas aplicadas según las bases (punto 3.2): Etapa 2 = promedio de las notas del Comité; nota final redondeada a 2 decimales; idóneo = Etapa 1 ≥ 6,0, Etapa 2 ≥ 6,0 y nota final ≥ 6,0.
+  Reglas aplicadas según las bases (punto 3.2): Etapa 2 = promedio de las notas del Comité; nota final redondeada a 2 decimales; idóneo = Etapa 1 ≥ 6,0, Etapa 2 ≥ 6,0 y nota final ≥ 6,0 (quien no cumple aparece sin número de lugar).
   Desempate: 1) mejor Etapa 2, 2) mejor nota Estudios, 3) mejor nota Experiencia laboral, 4) sorteo del Secretario Municipal.
   Si una misma persona presentó más de un sobre al mismo código, se cuenta una vez (su mejor nota). Los resultados con entrevistas incompletas son provisorios.
-  Se actualiza automáticamente cada <span id="seg"></span> s.
+  Se consulta la planilla cada <span id="seg"></span> s.
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>window.XLSX || document.write('<script src="xlsx.full.min.js"><\/script>')</script>
 <script>
 // ===================== CONFIGURACIÓN =====================
-const REFRESCO_SEG = 5;
-// Dirección del Worker de Cloudflare (ver LEEME.txt). Ej: 'https://ternas.miusuario.workers.dev'
+const REFRESCO_SEG = 1;
+// Dirección del Worker de Cloudflare (ver LEEME.txt).
 const API_URL = 'https://ternas.sergiohernandez-6bb.workers.dev/';
 const CARGOS = [
   { code:'DIRECTIVO6-01', nombre:'Directivo grado 6° · D601 / D602', vacantes:2 },
@@ -131,10 +148,10 @@ const MIN_IDONEO = 6.0;
 // =========================================================
 
 const $ = s => document.querySelector(s);
-document.getElementById('seg').textContent = REFRESCO_SEG;
+$('#seg').textContent = REFRESCO_SEG;
 let ocultarNombres = false;
-let ultimo = null;          // último conjunto de datos procesado
-let posAnterior = {};       // key -> posición, para resaltar cambios
+let ultimo = null;
+const memo = {};   // clave fila -> {pos, nf, mv:{dir,n,t}, chgT}
 
 const norm = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase().replace(/\s+/g,' ').trim();
 const num = v => {
@@ -147,6 +164,7 @@ const r2 = x => Math.round((x + 1e-9) * 100) / 100;
 const fmt = (x, d=2) => x === null || x === undefined ? '—' : x.toFixed(d).replace('.', ',');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
+// ---------------- Lectura de la planilla ----------------
 function leerPlanilla(buf){
   const wb = XLSX.read(buf, {type:'array'});
   const ws = wb.Sheets[wb.SheetNames[0]];
@@ -165,17 +183,16 @@ function leerPlanilla(buf){
     const est = num(f[cEst]), exp = num(f[cExp]);
     let e1 = cE1 >= 0 ? num(f[cE1]) : null;
     if (e1 === null && est !== null && exp !== null) e1 = (est + exp) / 2;
-    const notas = cEnt.map(i => num(f[i])).filter(v => v !== null);
     out.push({
       folio: String(f[cFolio] ?? '').trim(), cod, nombre: String(f[cNom] ?? '').trim(),
-      est, exp, e1, notas, nEnt: cEnt.length,
+      est, exp, e1, notas: cEnt.map(i => num(f[i])).filter(v => v !== null), nEnt: cEnt.length,
     });
   }
   return out;
 }
 
+// ---------------- Cálculo según bases ----------------
 function calcular(regs){
-  // Calcula notas por postulación
   for (const r of regs){
     r.e2 = r.notas.length ? r.notas.reduce((a,b)=>a+b,0) / r.notas.length : null;
     r.nf = (r.e2 !== null && r.est !== null && r.exp !== null) ? r2(r.est*0.25 + r.exp*0.25 + r.e2*0.5) : null;
@@ -186,30 +203,26 @@ function calcular(regs){
     if (r.nf !== null && r.nf < MIN_IDONEO) r.motivos.push('Nota final < 6,0');
     r.idoneo = r.nf !== null && r.motivos.length === 0;
   }
+  const cmp = (a,b) => (b.nf - a.nf) || (b.e2 - a.e2) || ((b.est??0) - (a.est??0)) || ((b.exp??0) - (a.exp??0));
   const res = {};
   for (const cfg of CARGOS){
     const key = norm(cfg.code);
-    const delCargo = regs.filter(r => r.cod === key);
-    // Unificar sobres duplicados de una misma persona en el mismo código
     const porPersona = new Map();
-    for (const r of delCargo){
+    for (const r of regs.filter(r => r.cod === key)){
       const k = norm(r.nombre) || ('F' + r.folio);
       const prev = porPersona.get(k);
       if (!prev){ porPersona.set(k, {...r, folios:[r.folio], pkey:k}); continue; }
       prev.folios.push(r.folio);
       const mejor = (r.nf ?? -1) > (prev.nf ?? -1) || ((r.nf ?? -1) === (prev.nf ?? -1) && r.notas.length > prev.notas.length);
-      if (mejor){ const fol = prev.folios; porPersona.set(k, {...r, folios:fol, pkey:k}); }
+      if (mejor) porPersona.set(k, {...r, folios:prev.folios, pkey:k});
     }
     const personas = [...porPersona.values()];
-    const conNota = personas.filter(p => p.nf !== null);
-    const pendientes = personas.filter(p => p.nf === null);
-    const cmp = (a,b) => (b.nf - a.nf) || (b.e2 - a.e2) || ((b.est??0) - (a.est??0)) || ((b.exp??0) - (a.exp??0));
-    const idoneos = conNota.filter(p => p.idoneo).sort(cmp);
-    const noIdoneos = conNota.filter(p => !p.idoneo).sort(cmp);
-    // Marcar empates y su criterio de resolución
+    const idoneos = personas.filter(p => p.idoneo).sort(cmp);
+    const noIdoneos = personas.filter(p => p.nf !== null && !p.idoneo).sort(cmp);
+    const pendientes = personas.filter(p => p.nf === null).sort((a,b) => (b.e1??0) - (a.e1??0));
     idoneos.forEach((p,i) => {
       p.pos = i+1; p.empate = null;
-      const vecinos = [idoneos[i-1], idoneos[i+1]].filter(Boolean).filter(q => q.nf === p.nf);
+      const vecinos = [idoneos[i-1], idoneos[i+1]].filter(q => q && q.nf === p.nf);
       if (vecinos.length){
         if (vecinos.some(q => cmp(p,q) === 0)) p.empate = 'sorteo';
         else if (vecinos.some(q => q.e2 !== p.e2)) p.empate = 'Etapa 2';
@@ -218,99 +231,154 @@ function calcular(regs){
       }
     });
     const cupo = 3 + (cfg.vacantes - 1);
-    const top = idoneos.slice(0, cupo);
-    const corteEmpatado = idoneos.length > cupo && cmp(idoneos[cupo-1], idoneos[cupo]) === 0;
-    res[cfg.code] = { cfg, cupo, top, resto: idoneos.slice(cupo), noIdoneos, pendientes, total: personas.length,
-                      completas: personas.filter(p => p.completa).length, corteEmpatado };
+    res[cfg.code] = { cfg, cupo, idoneos, noIdoneos, pendientes, total: personas.length,
+      completas: personas.filter(p => p.completa).length,
+      corteEmpatado: idoneos.length > cupo && cmp(idoneos[cupo-1], idoneos[cupo]) === 0 };
   }
-  // Personas que aparecen en ternas de más de un cargo
   const enTernas = new Map();
-  for (const c of Object.values(res)) for (const p of c.top){
+  for (const c of Object.values(res)) for (const p of c.idoneos.slice(0, c.cupo)){
     if (!enTernas.has(p.pkey)) enTernas.set(p.pkey, []);
     enTernas.get(p.pkey).push(c.cfg.code);
   }
-  for (const c of Object.values(res)) for (const p of c.top)
-    p.otras = enTernas.get(p.pkey).filter(x => x !== c.cfg.code);
+  for (const c of Object.values(res)) for (const p of c.idoneos)
+    p.otras = p.pos <= c.cupo ? enTernas.get(p.pkey).filter(x => x !== c.cfg.code) : [];
   return res;
 }
 
-function etiqueta(p){ return ocultarNombres ? `Folio ${p.folios.join(' / ')}` : esc(p.nombre); }
+// ---------------- Presentación ----------------
+const etiqueta = p => ocultarNombres ? `Folio ${esc(p.folios.join(' / '))}` : esc(p.nombre);
 
-function filaTop(p, codigo){
-  const k = codigo + '|' + p.pkey;
-  const cambio = posAnterior[k] !== undefined && posAnterior[k] !== p.pos;
+function htmlFila(p, code, zona){
+  const k = code + '|' + p.pkey;
+  const m = memo[k];
   const tags = [];
-  if (!p.completa) tags.push(`<span class="tag warn">Entrevista parcial ${p.notas.length}/${p.nEnt}</span>`);
-  else tags.push(`<span class="tag ok">Entrevista completa</span>`);
+  if (p.nf !== null && !p.completa) tags.push(`<span class="tag warn">Parcial ${p.notas.length}/${p.nEnt}</span>`);
+  if (p.nf !== null && !p.idoneo) tags.push(`<span class="tag bad">No idóneo: ${esc(p.motivos.join(', '))}</span>`);
   if (p.empate === 'sorteo') tags.push(`<span class="tag bad">Empate total · sorteo</span>`);
-  else if (p.empate) tags.push(`<span class="tag info">Empate NF · resuelto por ${p.empate}</span>`);
-  if (p.otras && p.otras.length) tags.push(`<span class="tag info">También en terna ${p.otras.join(', ')}</span>`);
+  else if (p.empate) tags.push(`<span class="tag info">Empate · resuelto por ${p.empate}</span>`);
+  if (p.otras && p.otras.length) tags.push(`<span class="tag info">También en ${esc(p.otras.join(', '))}</span>`);
   if (p.folios.length > 1) tags.push(`<span class="tag">${p.folios.length} sobres</span>`);
-  return `<div class="row ${p.pos===1?'p1':''} ${cambio?'flash':''}" data-k="${esc(k)}">
-    <div class="pos">${p.pos}</div>
-    <div>
-      <div class="name">${etiqueta(p)}</div>
-      <div class="detail">${ocultarNombres ? '' : `Folio ${esc(p.folios.join(' / '))} · `}Estudios <b>${fmt(p.est,1)}</b> · Exp. <b>${fmt(p.exp,1)}</b> · Entrevista <b>${fmt(p.e2)}</b>${p.notas.length?` <span>(${p.notas.map(n=>fmt(n,1)).join(' · ')})</span>`:''}</div>
-      <div class="tags">${tags.join('')}</div>
-    </div>
-    <div class="score"><div class="nf">${fmt(p.nf)}</div><div class="nf-l">Nota final</div></div>
-  </div>`;
+  const notas = p.notas.length ? `Entrevistadores: ${p.notas.map(n=>fmt(n,1)).join(' · ')}` : `Etapa 1: ${fmt(p.e1)} · sin notas de entrevista`;
+  const sub = (ocultarNombres ? '' : `Folio ${esc(p.folios.join(' / '))} · `) + notas;
+  let mv = '';
+  if (m && m.mv && Date.now() - m.mv.t < 6000)
+    mv = `<span class="mv ${m.mv.dir}">${m.mv.dir==='up'?'▲':'▼'}${m.mv.n}</span>`;
+  return `<div class="pos">${p.pos && p.idoneo ? p.pos : '—'}</div>
+    <div><div class="nm">${etiqueta(p)}</div><div class="sb">${sub}</div>${tags.length?`<div class="tags">${tags.join('')}</div>`:''}</div>
+    <div class="n hx">${fmt(p.est,1)}</div><div class="n hx">${fmt(p.exp,1)}</div>
+    <div class="n hx">${fmt(p.e2)}</div><div class="n nf">${fmt(p.nf)}</div><div>${mv}</div>`;
 }
 
-function tabla(lista, titulo){
-  if (!lista.length) return '';
-  return `<div class="split">${titulo}</div><div class="tbl"><table>
-    <tr><th>#</th><th>Postulante</th><th class="n">Est.</th><th class="n">Exp.</th><th class="n">Entrev.</th><th class="n">N. final</th><th>Estado</th></tr>
-    ${lista.map(p => `<tr class="${p.idoneo?'':'out'}"><td>${p.pos ?? '—'}</td><td>${etiqueta(p)}</td>
-      <td class="n">${fmt(p.est,1)}</td><td class="n">${fmt(p.exp,1)}</td><td class="n">${fmt(p.e2)}</td><td class="n">${fmt(p.nf)}</td>
-      <td>${p.idoneo ? (p.completa?'Idóneo':`Parcial ${p.notas.length}/${p.nEnt}`) : esc(p.motivos.join(', '))}</td></tr>`).join('')}
-  </table></div>`;
+function construirTarjetas(){
+  $('#app').innerHTML = CARGOS.map(cfg => `
+    <section class="card" data-code="${esc(cfg.code)}">
+      <div class="card-h"><div><div class="code">${esc(cfg.code)}<span class="pill">${cfg.vacantes} vacante${cfg.vacantes>1?'s':''} · ${cfg.vacantes>1?'4 mejores':'Terna'}</span></div>
+        <div class="cargo">${esc(cfg.nombre)}</div></div>
+        <div class="meta" data-meta></div></div>
+      ${cfg.vacantes>1 ? `<div class="note"><b>Integración sucesiva (3.2.6):</b> 1.ª terna (D601) = lugares 1 a 3. 2.ª terna (D602) = los 2 no seleccionados de la 1.ª terna + el 4.º lugar.</div>` : ''}
+      <div data-avisos></div>
+      <div class="cols"><div>N.º</div><div>Postulante</div><div class="n hx">Est.</div><div class="n hx">Exp.</div><div class="n hx">Entrev.</div><div class="n">N. final</div><div></div></div>
+      <div class="lista" data-lista></div>
+    </section>`).join('');
+}
+
+function actualizarTarjeta(c){
+  const code = c.cfg.code;
+  const card = document.querySelector(`.card[data-code="${CSS.escape(code)}"]`);
+  const lista = card.querySelector('[data-lista]');
+  card.querySelector('[data-meta]').innerHTML = `Entrevistados: ${c.total - c.pendientes.length}/${c.total}<br>Completos: ${c.completas}/${c.total}`;
+  const avisos = [];
+  if (c.corteEmpatado) avisos.push(`<div class="note bad"><b>Empate total en el corte:</b> el lugar ${c.cupo} está empatado con el siguiente; corresponde sorteo.</div>`);
+  if (c.pendientes.length === 0 && c.idoneos.length < c.cupo)
+    avisos.push(`<div class="note warn">Solo ${c.idoneos.length} postulante(s) idóneo(s): no se alcanza a completar ${c.cfg.vacantes>1?'los 4 lugares':'la terna'}.</div>`);
+  const av = card.querySelector('[data-avisos]');
+  const avHtml = avisos.join('');
+  if (av._h !== avHtml){ av.innerHTML = avHtml; av._h = avHtml; }
+
+  // Lista ordenada de elementos (filas y separadores)
+  const items = [];
+  c.idoneos.forEach((p,i) => {
+    const zona = p.pos <= 3 ? 'terna' : (p.pos <= c.cupo ? 'extra' : '');
+    items.push({k:'p|'+p.pkey, p, cls:'r ' + zona + (p.pos===1?' p1':'')});
+    if (p.pos === c.cupo && i < c.idoneos.length - 1)
+      items.push({k:'s|corte', cls:'sep corte', html:`Corte · ${c.cfg.vacantes>1?'4 mejores':'terna'}`});
+  });
+  if (!c.idoneos.length) items.push({k:'s|vacio', cls:'vacio', html:'Aún no hay postulantes idóneos con notas de entrevista.'});
+  if (c.noIdoneos.length){
+    items.push({k:'s|noid', cls:'sep', html:`No idóneos (bajo 6,0) · ${c.noIdoneos.length}`});
+    c.noIdoneos.forEach(p => items.push({k:'p|'+p.pkey, p, cls:'r out'}));
+  }
+  if (c.pendientes.length){
+    items.push({k:'s|pend', cls:'sep', html:`Pendientes de entrevista · ${c.pendientes.length}`});
+    c.pendientes.forEach(p => items.push({k:'p|'+p.pkey, p, cls:'r out'}));
+  }
+
+  // Detectar cambios de lugar y de nota
+  const ahora = Date.now();
+  for (const it of items){
+    if (!it.p) continue;
+    const mk = code + '|' + it.p.pkey;
+    const pos = it.p.idoneo ? it.p.pos : null;
+    const m = memo[mk];
+    if (m){
+      if (m.pos !== pos && m.pos !== null && pos !== null)
+        m.mv = {dir: pos < m.pos ? 'up' : 'down', n: Math.abs(pos - m.pos), t: ahora};
+      if (m.nf !== it.p.nf || m.nn !== it.p.notas.join()) m.chgT = ahora;
+      m.pos = pos; m.nf = it.p.nf; m.nn = it.p.notas.join();
+    } else memo[mk] = {pos, nf: it.p.nf, nn: it.p.notas.join(), chgT: 0, nuevo: !!lista.children.length};
+    if (memo[mk].chgT && ahora - memo[mk].chgT < 2500) it.cls += ' chg';
+    it.html = htmlFila(it.p, code);
+  }
+
+  // FLIP: posiciones anteriores
+  const antes = new Map();
+  const existentes = new Map();
+  for (const el of lista.children){ antes.set(el.dataset.k, el.getBoundingClientRect().top); existentes.set(el.dataset.k, el); }
+  const usados = new Set();
+  for (const it of items){
+    let el = existentes.get(it.k);
+    if (!el){ el = document.createElement('div'); el.dataset.k = it.k; if (antes.size) el.classList.add('ent'); }
+    usados.add(it.k);
+    if (el._h !== it.html){ el.innerHTML = it.html; el._h = it.html; }
+    const cls = it.cls + (el.classList.contains('ent') ? ' ent' : '');
+    if (el.className !== cls) el.className = cls;
+    lista.appendChild(el);   // reordena (mueve el nodo existente)
+  }
+  for (const [k, el] of existentes) if (!usados.has(k)) el.remove();
+  // FLIP: animar desde la posición anterior
+  for (const el of lista.children){
+    const t0 = antes.get(el.dataset.k);
+    if (t0 === undefined) continue;
+    const dy = t0 - el.getBoundingClientRect().top;
+    if (Math.abs(dy) < 1) continue;
+    el.style.transition = 'none';
+    el.style.transform = `translateY(${dy}px)`;
+    el.style.zIndex = '2';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      el.style.transition = 'transform .8s cubic-bezier(.2,.8,.2,1), background-color 1.2s ease';
+      el.style.transform = '';
+      setTimeout(() => { el.style.zIndex = ''; }, 850);
+    }));
+  }
 }
 
 function render(){
   if (!ultimo) return;
-  const res = ultimo;
-  const html = [];
+  if (!$('#app').children.length) construirTarjetas();
   let tot = 0, comp = 0;
   for (const cfg of CARGOS){
-    const c = res[cfg.code];
+    const c = ultimo[cfg.code];
     tot += c.total; comp += c.completas;
-    const multi = cfg.vacantes > 1;
-    const head = `<div class="card-h"><div><div class="code">${esc(cfg.code)}<span class="pill">${cfg.vacantes} vacante${cfg.vacantes>1?'s':''} · ${multi?'4 mejores':'Terna'}</span></div>
-      <div class="cargo">${esc(cfg.nombre)}</div></div>
-      <div class="meta">Entrevistados: ${c.total - c.pendientes.length}/${c.total}<br>Completos: ${c.completas}/${c.total}</div></div>`;
-    let body = '';
-    if (multi) body += `<div class="note"><b>Integración sucesiva (3.2.6):</b> 1.ª terna (${esc('D601')}) = lugares 1 a 3. 2.ª terna (D602) = los 2 no seleccionados de la 1.ª terna + el 4.º lugar.</div>`;
-    if (c.corteEmpatado) body += `<div class="note" style="background:var(--bad-soft);color:var(--bad)"><b>Empate total en el corte:</b> el lugar ${c.cupo} está empatado con el siguiente; corresponde sorteo.</div>`;
-    if (!c.top.length) body += `<div class="empty">Aún no hay postulantes con notas de entrevista.</div>`;
-    else {
-      body += '<div class="rows">';
-      c.top.forEach(p => { body += filaTop(p, cfg.code); });
-      body += '</div>';
-    }
-    const faltan = c.cupo - c.top.length;
-    if (c.top.length && faltan > 0 && c.pendientes.length === 0)
-      body += `<div class="note" style="background:var(--warn-soft);color:var(--warn)">Solo ${c.top.length} postulante(s) idóneo(s): no se alcanza a completar ${multi?'los 4 lugares':'la terna'}.</div>`;
-    const extra = tabla(c.resto, 'Siguientes idóneos') + tabla(c.noIdoneos, 'No idóneos') ;
-    const pend = c.pendientes.length ? `<div class="split">Pendientes de entrevista (${c.pendientes.length})</div><div class="tbl" style="font-size:12.8px;color:var(--muted);padding:4px 18px 12px">${c.pendientes.map(etiqueta).join(' · ')}</div>` : '';
-    body += (extra || pend) ? `<details><summary>Ver ranking completo y pendientes</summary>${extra}${pend}</details>` : '';
-    html.push(`<section class="card">${head}${body}</section>`);
+    actualizarTarjeta(c);
   }
-  $('#app').innerHTML = html.join('');
   $('#avance').textContent = `Entrevistas completas: ${comp}/${tot}`;
   $('#barra').style.width = (tot ? (comp/tot*100) : 0) + '%';
-  // Guardar posiciones para detectar cambios en la próxima actualización
-  const nuevo = {};
-  for (const cfg of CARGOS) for (const p of res[cfg.code].top) nuevo[cfg.code + '|' + p.pkey] = p.pos;
-  setTimeout(() => document.querySelectorAll('.row.flash').forEach(e => e.classList.remove('flash')), 2500);
-  return nuevo;
 }
 
-// ---- Origen de datos: servidor local (INICIAR.bat) o Worker con clave (GitHub Pages) ----
+// ---------------- Origen de datos ----------------
 const ES_LOCAL = ['localhost','127.0.0.1'].includes(location.hostname);
-const leerClave = () => { try { return localStorage.getItem('ternas_clave') || ''; } catch(e){ return window._clave || ''; } };
+const leerClave = () => { try { return localStorage.getItem('ternas_clave') || window._clave || ''; } catch(e){ return window._clave || ''; } };
 const guardarClave = v => { window._clave = v; try { v ? localStorage.setItem('ternas_clave', v) : localStorage.removeItem('ternas_clave'); } catch(e){} };
-// Permite compartir el enlace como https://.../#clave=XXXX
 (function(){
   const m = location.hash.match(/clave=([^&]+)/);
   if (m){ guardarClave(decodeURIComponent(m[1])); history.replaceState(null, '', location.pathname + location.search); }
@@ -331,7 +399,7 @@ $('#claveForm').addEventListener('submit', e => {
   actualizar();
 });
 
-let enCurso = false;
+let enCurso = false, firmaAnterior = '', fallos = 0;
 async function actualizar(){
   if (enCurso || esperandoClave || document.hidden) return;
   enCurso = true;
@@ -346,16 +414,19 @@ async function actualizar(){
     }
     if (!r.ok) throw new Error((await r.text()) || ('HTTP ' + r.status));
     const regs = leerPlanilla(await r.arrayBuffer());
-    ultimo = calcular(regs);
-    const nuevo = render();
-    posAnterior = nuevo;
-    const h = new Date().toLocaleTimeString('es-CL');
-    $('#estado').innerHTML = `<span class="dot live"></span>En vivo · actualizado ${h}`;
+    const firma = JSON.stringify(regs);
+    if (firma !== firmaAnterior){ ultimo = calcular(regs); firmaAnterior = firma; }
+    render();   // también refresca indicadores temporales (flechas, resaltados)
+    fallos = 0;
+    $('#estado').innerHTML = `<span class="dot live"></span>En vivo · ${new Date().toLocaleTimeString('es-CL')}`;
     $('#banner').hidden = true;
   }catch(e){
-    $('#estado').innerHTML = `<span class="dot err"></span>Sin conexión con la planilla`;
-    $('#bannerTxt').textContent = 'No se pudo leer la planilla: ' + e.message + (ultimo ? ' — se muestran los últimos datos obtenidos.' : '');
-    $('#banner').hidden = false;
+    fallos++;
+    if (fallos >= 3){   // tolera fallas puntuales sin alarmar
+      $('#estado').innerHTML = `<span class="dot err"></span>Sin conexión con la planilla`;
+      $('#bannerTxt').textContent = 'No se pudo leer la planilla: ' + e.message + (ultimo ? ' — se muestran los últimos datos obtenidos.' : '');
+      $('#banner').hidden = false;
+    }
   } finally {
     enCurso = false;
   }
@@ -367,20 +438,18 @@ function toggleNombres(){
   render();
 }
 $('#btnNombres').addEventListener('click', toggleNombres);
-document.addEventListener('keydown', e => { if (e.key.toLowerCase() === 'n' && !e.ctrlKey && !e.metaKey) toggleNombres(); });
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key.toLowerCase() === 'n' && !e.ctrlKey && !e.metaKey && !e.altKey) toggleNombres();
+});
 
 if (location.protocol === 'file:'){
   $('#estado').innerHTML = `<span class="dot err"></span>Abra la página publicada o INICIAR.bat`;
   $('#bannerTxt').textContent = 'Abierta directamente desde el archivo, la página no puede acceder a la planilla. Use la dirección publicada (GitHub Pages) o INICIAR.bat.';
   $('#banner').hidden = false;
-} else if (!ES_LOCAL && API_URL.startsWith('PEGAR')){
-  $('#estado').innerHTML = `<span class="dot err"></span>Falta configurar`;
-  $('#bannerTxt').textContent = 'Falta indicar la dirección del Worker (API_URL) en index.html. Ver LEEME.txt.';
-  $('#banner').hidden = false;
 } else {
   actualizar();
   setInterval(actualizar, REFRESCO_SEG * 1000);
-  // Al volver a la pestaña, actualizar de inmediato
   document.addEventListener('visibilitychange', () => { if (!document.hidden) actualizar(); });
 }
 </script>
